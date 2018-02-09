@@ -6,9 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Version of Nginx to install
 ENV NGINX_VERSION 1.9.7-1~jessie
 
-RUN apt-key adv \
-  --keyserver hkp://pgp.mit.edu:80 \
-  --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+RUN curl -O https://nginx.org/keys/nginx_signing.key && apt-key add ./nginx_signing.key
 
 RUN echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list
 
@@ -52,6 +50,9 @@ ENV LANG C
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+
+
+
 RUN echo "LANG=en_US.UTF-8" > /etc/default/locale
 RUN echo "LC_TYPE=en_US.UTF-8" > /etc/default/locale
 RUN echo "LC_MESSAGES=POSIX" >> /etc/default/locale
@@ -80,4 +81,4 @@ VOLUME /usr/src/taiga-back/media
 COPY checkdb.py /checkdb.py
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "-w 3", "-t 60", "--pythonpath=.", "-b 127.0.0.1:8001", "taiga.wsgi"]

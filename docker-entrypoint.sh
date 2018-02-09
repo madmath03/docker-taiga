@@ -59,5 +59,5 @@ fi
 # nginx -g "daemon off;"
 service nginx start
 
-# Start Taiga backend Django server
+# Start gunicorn  server
 exec "$@"
