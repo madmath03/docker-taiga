@@ -53,13 +53,19 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 
 
-RUN echo "LANG=en_US.UTF-8" > /etc/default/locale
-RUN echo "LC_TYPE=en_US.UTF-8" > /etc/default/locale
-RUN echo "LC_MESSAGES=POSIX" >> /etc/default/locale
-RUN echo "LANGUAGE=en" >> /etc/default/locale
+#RUN echo "LANG=en_US.UTF-8" >> /etc/default/locale
+#RUN echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
+#RUN echo "LC_TYPE=en_US.UTF-8" >> /etc/default/locale
+#RUN echo "LC_MESSAGES=POSIX" >> /etc/default/locale
+#RUN echo "LANGUAGE=en" >> /etc/default/locale
+
+
 
 ENV LANG en_US.UTF-8
 ENV LC_TYPE en_US.UTF-8
+
+
+RUN locale-gen en_US.UTF-8 && locale -a
 
 ENV TAIGA_SSL False
 ENV TAIGA_ENABLE_EMAIL False
@@ -68,7 +74,7 @@ ENV TAIGA_SECRET_KEY "!!!REPLACE-ME-j1598u1J^U*(y251u98u51u5981urf98u2o5uvoiiuzh
 
 RUN python manage.py collectstatic --noinput
 
-RUN locale -a
+
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
