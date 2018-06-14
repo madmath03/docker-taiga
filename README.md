@@ -21,7 +21,7 @@ Or to use this container directly, run:
       -p 80:80 \
       -e TAIGA_HOSTNAME=taiga.mycompany.net \
       -v ./media:/usr/src/taiga-back/media \
-      benhutchins/taiga
+      novanet/taiga
 
 See `Summarize` below for a complete example. Partial explanation of arguments:
 
@@ -72,7 +72,7 @@ An example `docker run` command using an external database:
       -e TAIGA_DB_USER=taiga \
       -e TAIGA_DB_PASSWORD=mypassword \
       -itd \
-      benhutchins/taiga
+      novanet/taiga
 
 ## Taiga Events
 
@@ -90,7 +90,7 @@ docker run --name taiga-celery -d --link taiga-rabbit:rabbit celery
 docker run --name taiga-events -d --link taiga-rabbit:rabbit benhutchins/taiga-events
 ```
 
-Then append the following arguments to your `docker run` command running your `benhutchins/taiga` container:
+Then append the following arguments to your `docker run` command running your `novanet/taiga` container:
 
     --link taiga-rabbit:rabbit
     --link taiga-redis:redis
@@ -165,7 +165,7 @@ To sum it all up, if you want to run Taiga without using docker-compose, run thi
       -p 80:80 \
       -e TAIGA_HOSTNAME=$(docker-machine ip default) \
       -v ./media:/usr/src/taiga-back/media \
-      benhutchins/taiga
+      novanet/taiga
 
 Again, you can avoid all this by using [benhutchins/docker-taiga-example](https://github.com/benhutchins/docker-taiga-example) and then just run `docker-compose up`.
 
@@ -175,7 +175,7 @@ If you want to get the latest and greatest, you can clone this repo, then update
 Taiga to the latest by running:
 
 ```bash
-git clone https://github.com/benhutchins/docker-taiga.git && cd docker-taiga/
+git clone https://github.com/ajira86/docker-taiga.git && cd docker-taiga/
 git submodule update --init --remote
 docker-compose up -d # this will build and then start taiga locally
 ```

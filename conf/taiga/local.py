@@ -5,7 +5,7 @@
 # https://github.com/taigaio/taiga-back/blob/master/settings/local.py.example
 #
 # Importing docker provides common settings, see:
-# https://github.com/benhutchins/docker-taiga/blob/master/docker-settings.py
+# https://github.com/ajira86/docker-taiga/blob/master/docker-settings.py
 # https://github.com/taigaio/taiga-back/blob/master/settings/common.py
 
 from .docker import *

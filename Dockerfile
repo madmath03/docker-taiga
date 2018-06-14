@@ -1,5 +1,5 @@
 FROM python:3
-MAINTAINER Benjamin Hutchins <ben@hutchins.co>
+MAINTAINER Samuel Dorsaz <samuel@dorsaz.net>
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -37,28 +37,12 @@ RUN ln -s /taiga/conf.json /usr/src/taiga-front-dist/dist/js/conf.json
 WORKDIR /usr/src/taiga-back
 
 # specify LANG to ensure python installs locals properly
-# fixes benhutchins/docker-taiga-example#4
-# ref benhutchins/docker-taiga#15
 ENV LANG C
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-
-
-
-#RUN echo "LANG=en_US.UTF-8" >> /etc/default/locale
-#RUN echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
-#RUN echo "LC_TYPE=en_US.UTF-8" >> /etc/default/locale
-#RUN echo "LC_MESSAGES=POSIX" >> /etc/default/locale
-#RUN echo "LANGUAGE=en" >> /etc/default/locale
-
-
-
 ENV LANG en_US.UTF-8
 ENV LC_TYPE en_US.UTF-8
-
-
 RUN locale-gen en_US.UTF-8 && locale -a
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 ENV TAIGA_SSL False
 ENV TAIGA_ENABLE_EMAIL False
