@@ -1,5 +1,4 @@
 FROM python:3.6.6-jessie
-MAINTAINER Samuel Dorsaz <samuel@dorsaz.net>
 
 ENV DEBIAN_FRONTEND noninteractive
 
