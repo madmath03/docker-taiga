@@ -1,4 +1,4 @@
-FROM python:3.6.6-jessie
+FROM python:3.5.5-jessie
 
 ENV DEBIAN_FRONTEND noninteractive
 
