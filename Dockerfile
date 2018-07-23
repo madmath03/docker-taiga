@@ -54,6 +54,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Define default env vars
 ENV TAIGA_SSL False
+ENV TAIGA_SSL_BY_REVERSE_PROXY False
 ENV TAIGA_ENABLE_EMAIL False
 ENV TAIGA_HOSTNAME localhost
 ENV TAIGA_SECRET_KEY "!!!REPLACE-ME-j1598u1J^U*(y251u98u51u5981urf98u2o5uvoiiuzhlit3)!!!"
