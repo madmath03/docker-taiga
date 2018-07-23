@@ -45,7 +45,7 @@ services:
       # TAIGA_EMAIL_PASS: super-secure-pass phrase thing!
 
   postgres:
-    image: postgres
+    image: postgres:10.4-alpine
     environment:
       POSTGRES_DB: taigadb
       POSTGRES_PASSWORD: password
