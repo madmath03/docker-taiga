@@ -29,7 +29,7 @@ COPY conf/locale.gen /etc/locale.gen
 RUN mkdir /run/nginx
 RUN sed -i "s/user www-data/user root/g" /etc/nginx/nginx.conf
 RUN sed -i "s/worker_connections 768/worker_connections 1024/g" /etc/nginx/nginx.conf
-RUN sed -i "s/ssl_session_cache shared:SSL:2m;/ssl_session_cache shared:SSL:10m;" /etc/nginx/nginx.conf
+RUN sed -i "s/ssl_session_cache shared:SSL:2m;/ssl_session_cache shared:SSL:10m;/g" /etc/nginx/nginx.conf
 
 RUN rm  /etc/nginx/conf.d/default.conf
 RUN mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
