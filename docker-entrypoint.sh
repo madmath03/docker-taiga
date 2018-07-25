@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Sleep when asked to, to allow the database time to start
 # before Taiga tries to run /checkdb.py below.
@@ -64,8 +64,7 @@ elif grep -q "wss://" "/taiga/conf.json"; then
 fi
 
 # Start nginx service (need to start it as background process)
-# nginx -g "daemon off;"
-service nginx start
+nginx -g "daemon off;"
 
 # Start gunicorn  server
 exec "$@"

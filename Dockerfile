@@ -1,24 +1,23 @@
-FROM python:3.5.5-jessie
+FROM python:3.5-alpine
 
-ENV DEBIAN_FRONTEND noninteractive
+# Specify LANG to ensure python installs locals properly
+ENV LANG C \
+    LANG en_US.UTF-8 \
+    LC_TYPE en_US.UTF-8
 
-RUN set -x; \
-    apt-get update \
-    && apt-get install -y --no-install-recommends \
-        locales \
-        gettext \
-        ca-certificates \
-        nginx \
-    && rm -rf /var/lib/apt/lists/*
-
-
-# Setup locale settings
-RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
-# specify LANG to ensure python installs locals properly
-ENV LANG C
-ENV LANG en_US.UTF-8
-ENV LC_TYPE en_US.UTF-8
-RUN locale-gen en_US.UTF-8 && locale -a
+# Install necessary applications
+RUN apk add --update --no-cache \
+    git \
+    gettext \
+    ca-certificates \
+    nginx \
+    postgresql-dev \
+    libffi-dev \
+    gcc \
+    musl-dev \
+    libxml2-dev \
+    libxslt-dev \
+    jpeg-dev
 
 # Preparing Nginx data
 COPY taiga-back /usr/src/taiga-back
@@ -27,12 +26,20 @@ COPY docker-settings.py /usr/src/taiga-back/settings/docker.py
 COPY conf/locale.gen /etc/locale.gen
 
 # Setup Nginx configurations
-RUN rm /etc/nginx/sites-enabled/default
+RUN mkdir /run/nginx
 RUN sed -i "s/user www-data/user root/g" /etc/nginx/nginx.conf
 RUN sed -i "s/worker_connections 768/worker_connections 1024/g" /etc/nginx/nginx.conf
+RUN sed -i "s/ssl_session_cache shared:SSL:2m;/ssl_session_cache shared:SSL:10m;" /etc/nginx/nginx.conf
+
+RUN rm  /etc/nginx/conf.d/default.conf
+RUN mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
+RUN sed -i '/include \/etc\/nginx\/conf\.d\/\*\.conf;/a \
+        include /etc/nginx/sites-enabled/*;' \
+        /etc/nginx/nginx.conf
 COPY conf/nginx/sites-available/taiga        /etc/nginx/sites-available/taiga
 COPY conf/nginx/sites-available/taiga-ssl    /etc/nginx/sites-available/taiga-ssl
 COPY conf/nginx/sites-available/taiga-events /etc/nginx/sites-available/taiga-events
+
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
