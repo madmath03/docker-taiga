@@ -64,7 +64,7 @@ elif grep -q "wss://" "/taiga/conf.json"; then
 fi
 
 # Start nginx service (need to start it as background process)
-nginx -g "daemon off;"
+nginx
 
 # Start gunicorn  server
 exec "$@"
