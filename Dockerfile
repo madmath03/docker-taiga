@@ -1,10 +1,13 @@
-FROM python:3.5.5-jessie
+FROM python:3.5-slim-stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN set -x; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
+        g++ \
+        libssl-dev \
+        git \
         locales \
         gettext \
         ca-certificates \
