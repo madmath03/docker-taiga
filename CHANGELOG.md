@@ -6,15 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- This CHANGELOG file
+- This CHANGELOG file and CONTRIBUTING.
 - Setup HEALTHCHECK on image.
 
 ### Changed
-- Move base image from python:3.5-jessie to slim-stretch
+- Move base image from python:3.5-jessie to slim-stretch.
 - Add themes in taiga options.
 
 ### Fixed
-- Fix docker-compose with string values as boolean
+- Fix docker-compose with string values as boolean.
 
 ## [3.3.13] - 2017-07-23
 ### Added
@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Update to taiga 3.3.6 (back and front).
 - Now, try to migrate on each startup in case of update.
-- Restore port to 8000 instead of 8001
+- Restore port to 8000 instead of 8001.
 
 ## [3.3.2] - 2018-05-28
 ### Changed
