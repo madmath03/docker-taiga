@@ -68,6 +68,11 @@ ENV TAIGA_SECRET_KEY "!!!REPLACE-ME-j1598u1J^U*(y251u98u51u5981urf98u2o5uvoiiuzh
 EXPOSE 80 443
 VOLUME /usr/src/taiga-back/media
 
+# Health checks
+HEALTHCHECK CMD curl --fail http://localhost/conf.json || exit 1
+HEALTHCHECK CMD curl --fail http://localhost/api/v1/ || exit 1
+HEALTHCHECK CMD curl --fail http://localhost || exit 1
+
 COPY checkdb.py /checkdb.py
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]

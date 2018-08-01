@@ -10,5 +10,6 @@
     "privacyPolicyUrl": null,
     "termsOfServiceUrl": null,
     "maxUploadFileSize": null,
-    "contribPlugins": []
+    "contribPlugins": [],
+    "themes": ["taiga", "material-design", "high-contrast"]
 }
