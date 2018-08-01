@@ -1,4 +1,4 @@
-FROM python:3.5-alpine
+FROM python:3.5-alpine3.7
 
 # Specify LANG to ensure python installs locals properly
 ENV LANG C \
