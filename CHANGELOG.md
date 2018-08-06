@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Move base image from python:3.5-jessie to slim-stretch.
 - Add themes in taiga options.
+- Allow to change hostname after container initialization.
 
 ### Fixed
 - Fix docker-compose with string values as boolean.
