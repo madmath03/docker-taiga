@@ -1,27 +1,7 @@
 server {
-    # Main
-    include snippets/main.conf;
-
-    # Frontend
-    include snippets/front.conf;
-
-    # Backend
-    include snippets/api.conf;
-
-    # Django admin access (/admin/)
-    include snippets/admin.conf;
-
-    # Files (static and media)
-    include snippets/files.conf;
+    # Taiga
+    include snippets/taiga.conf;
 
     # Events
-    location /events {
-       proxy_pass http://events/events;
-       proxy_http_version 1.1;
-       proxy_set_header Upgrade $http_upgrade;
-       proxy_set_header Connection "upgrade";
-       proxy_connect_timeout 7d;
-       proxy_send_timeout 7d;
-       proxy_read_timeout 7d;
-    }
+    include snippets/events.conf;
 }
