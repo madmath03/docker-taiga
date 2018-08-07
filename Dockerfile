@@ -32,9 +32,8 @@ COPY conf/locale.gen /etc/locale.gen
 RUN rm /etc/nginx/sites-enabled/default
 RUN sed -i "s/user www-data/user root/g" /etc/nginx/nginx.conf
 RUN sed -i "s/worker_connections 768/worker_connections 1024/g" /etc/nginx/nginx.conf
-COPY conf/nginx/sites-available/taiga        /etc/nginx/sites-available/taiga
-COPY conf/nginx/sites-available/taiga-ssl    /etc/nginx/sites-available/taiga-ssl
-COPY conf/nginx/sites-available/taiga-events /etc/nginx/sites-available/taiga-events
+COPY conf/nginx/sites-available/* /etc/nginx/sites-available/
+COPY conf/nginx/snippets/*        /etc/nginx/snippets/
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
