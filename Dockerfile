@@ -22,7 +22,6 @@ RUN apk add --update --no-cache \
 # Preparing Nginx data
 COPY taiga-back /usr/src/taiga-back
 COPY taiga-front-dist/ /usr/src/taiga-front-dist
-COPY docker-settings.py /usr/src/taiga-back/settings/docker.py
 COPY conf/locale.gen /etc/locale.gen
 
 # Setup Nginx configurations
@@ -47,8 +46,10 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 # Setup symbolic links for configuration files
 RUN mkdir -p /taiga
 COPY conf/taiga/local.py /taiga/local.py
+COPY conf/taiga/docker.py /taiga/docker.py
 COPY conf/taiga/conf.json /taiga/conf.json
 RUN ln -s /taiga/local.py /usr/src/taiga-back/settings/local.py
+RUN ln -s /taiga/docker.py /usr/src/taiga-back/settings/docker.py
 RUN ln -s /taiga/conf.json /usr/src/taiga-front-dist/dist/conf.json
 
 # Backwards compatibility

@@ -33,7 +33,7 @@ python manage.py compilemessages
 python manage.py collectstatic --noinput
 
 # Automatically replace "TAIGA_HOSTNAME" with the environment variable
-sed -i "s/TAIGA_HOSTNAME/$TAIGA_HOSTNAME/g" /taiga/conf.json
+sed -ri "s#(\"api\": \"http://).*(/api/v1/\",)#\1$TAIGA_HOSTNAME\2#g" /taiga/conf.json
 ln -s /etc/nginx/sites-available/taiga /etc/nginx/sites-enabled/taiga
 
 # Look to see if we should set the "eventsUrl"
