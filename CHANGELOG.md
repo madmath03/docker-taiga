@@ -8,14 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - This CHANGELOG file and CONTRIBUTING.
 - Setup HEALTHCHECK on image.
+- Add themes in taiga options.
 
 ### Changed
 - Move base image from python:3.5-jessie to slim-stretch.
-- Add themes in taiga options.
-- Allow to change hostname after container initialization.
+- Nginx configurations now use snippets.
+- Enable Gravatar by default.
 
 ### Fixed
 - Fix docker-compose with string values as boolean.
+- Allow to change hostname after container initialization.
+- Allow to use ssl with events.
 
 ## [3.3.13] - 2017-07-23
 ### Added

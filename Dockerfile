@@ -35,9 +35,8 @@ RUN mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
 RUN sed -i '/include \/etc\/nginx\/conf\.d\/\*\.conf;/a \
         include /etc/nginx/sites-enabled/*;' \
         /etc/nginx/nginx.conf
-COPY conf/nginx/sites-available/taiga        /etc/nginx/sites-available/taiga
-COPY conf/nginx/sites-available/taiga-ssl    /etc/nginx/sites-available/taiga-ssl
-COPY conf/nginx/sites-available/taiga-events /etc/nginx/sites-available/taiga-events
+COPY conf/nginx/sites-available/* /etc/nginx/sites-available/
+COPY conf/nginx/snippets/*        /etc/nginx/snippets/
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
