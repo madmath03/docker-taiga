@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.3.16] - 2017-08-11
 ### Added
+- Update to taiga 3.3.16 (back).
 - This CHANGELOG file and CONTRIBUTING.
 - Setup HEALTHCHECK on image.
 - Add themes in taiga options.
@@ -55,7 +58,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Update to taiga 3.3.1 (back and front).
 
-[Unreleased]: https://github.com/ajira86/docker-taiga/compare/3.3.13...HEAD
+[Unreleased]: https://github.com/ajira86/docker-taiga/compare/3.3.16...HEAD
+[3.3.16]: https://github.com/ajira86/docker-taiga/compare/3.3.13...3.3.16
 [3.3.13]: https://github.com/ajira86/docker-taiga/compare/3.3.8...3.3.13
 [3.3.8]: https://github.com/ajira86/docker-taiga/compare/3.3.6...3.3.8
 [3.3.6]: https://github.com/ajira86/docker-taiga/compare/3.3.2...3.3.6
