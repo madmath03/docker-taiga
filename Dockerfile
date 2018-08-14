@@ -12,6 +12,7 @@ RUN set -x; \
         gettext \
         ca-certificates \
         nginx \
+        curl \
     && rm -rf /var/lib/apt/lists/*
 
 
