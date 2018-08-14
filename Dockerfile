@@ -22,6 +22,7 @@ RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 ENV LANG C
 ENV LANG en_US.UTF-8
 ENV LC_TYPE en_US.UTF-8
+ENV PYTHONIOENCODING UTF-8
 RUN locale-gen en_US.UTF-8 && locale -a
 
 # Preparing Nginx data
