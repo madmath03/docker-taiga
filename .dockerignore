@@ -5,3 +5,4 @@
 !checkdb.py
 !docker-entrypoint.sh
 !docker-settings.py
+!config-slack-plugin.sh
