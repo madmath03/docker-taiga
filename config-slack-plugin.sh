@@ -35,7 +35,7 @@ activate_slack () {
   else
       # code if not found
       echo "Slack not yet active"
-      echo "\n" >> "$TAIGA_CONFIG_FILE"
+      echo "" >> "$TAIGA_CONFIG_FILE"
       echo "$TAGIA_SLACK_CONFIG" >> "$TAIGA_CONFIG_FILE"
       echo "Slack actived"
   fi
@@ -73,12 +73,10 @@ if [ ! -z "$TAIGA_SLACK" ]; then
   if [ "$TAIGA_SLACK" = "ACTIVE" ]; then
     download_taiga
     activate_slack
-    exit 0
   fi
 
   if [ "$TAIGA_SLACK" = "DEACTIVE" ]; then
     deactivate_slack
-    exit 0
   fi
 
 fi
