@@ -27,6 +27,11 @@ fi
 python manage.py compilemessages
 python manage.py collectstatic --noinput
 
+
+
+# configure the slack contrib plugin
+source /config-slack-plugin.sh
+
 # Automatically replace "TAIGA_HOSTNAME" with the environment variable
 sed -ri "s#(\"api\": \"http://).*(/api/v1/\",)#\1$TAIGA_HOSTNAME\2#g" /taiga/conf.json
 
