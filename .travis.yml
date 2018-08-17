@@ -1,0 +1,27 @@
+language: python
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - IMAGE_NAME=novanet/taiga
+
+before_script:
+  - docker pull "$IMAGE_NAME"
+  - docker pull postgres:10
+
+script:
+  - docker build --tag "$IMAGE_NAME" .
+  - docker images
+  - docker run --name taiga-postgres -e POSTGRES_PASSWORD=password -d postgres
+  - docker run -e TAIGA_HOSTNAME=localhost --link taiga-postgres:postgres -e TAIGA_DB_HOST=postgres -e TAIGA_DB_NAME=postgres -e TAIGA_DB_USER=postgres -e TAIGA_DB_PASSWORD=password -t $IMAGE_NAME /bin/bash /scripts/tests.sh
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:travis"
+
+deploy:
+  provider: script
+  script: docker push "${IMAGE_NAME}:travis"

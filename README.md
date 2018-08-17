@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ajira86/docker-taiga.svg?branch=travis)](https://travis-ci.org/ajira86/docker-taiga)
+
 Docker Image for Taiga
 ======================
 
