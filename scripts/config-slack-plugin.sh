@@ -37,7 +37,7 @@ activate_slack () {
   if grep -Fxq "$TAGIA_SLACK_CONFIG_BACKEND" "$TAIGA_CONFIG_FILE_BACKEND"
   then
       # backend is already configured 
-      echo "Slack already active in backend"
+      echo "Slack already actived in backend"
   else
       # backend is not configured
       echo "Activate Slack in backend"
@@ -50,9 +50,8 @@ activate_slack () {
   if grep -Fxq "$TAGIA_SLACK_CONFIG_FRONTED" "$TAIGA_CONFIG_FILE_FRONTEND"
   then
       # frontend is configured
-      echo "Slack already active in fronted"
+      echo "Slack already actived in fronted"
   else
-      # TODO: originally, we want to ADD the plugin and not just replace all previous configurations
       # frontend is not  configured
       echo "Activate Slack in fronted"
       PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","contribPlugins","'"$TAIGA_CONFIG_FILE_FRONTEND"'")'
@@ -67,29 +66,29 @@ deactivate_slack () {
   echo "Dectivate slack plugin in backend and frontend"
   if grep -Fxq "$TAGIA_SLACK_CONFIG_BACKEND" "$TAIGA_CONFIG_FILE_BACKEND"
   then
-      # code if found
-      echo "Slack is active"
+      # slack is active in the backend
+      echo "Deactivate Slack in backend"
       # for one reasion I cannot use the complete TAIGA_SLACK_CONFIG variable here
       PATTERNTOREMOVE="INSTALLED_APPS += [\"taiga_contrib_slack\"]"
       safe_pattern=$(printf '%s\n' "$PATTERNTOREMOVE" | sed 's/[]\[\.*^$(){}|/#"]/\\&/g' )
       # now we can safely do
       sed -i '/'"${safe_pattern}"'/d' "$TAIGA_CONFIG_FILE_BACKEND"
       echo $safe_pattern
-      echo "Slack deactived"
+      echo "Slack deactived in backend"
   else
-      # code if not found
-      echo "Slack is not active"
+      # slack is not active in the bacnekd
+      echo "Slack already deactived in backend"
   fi
 
   # activate in the fronted
   if grep -Fxq "$TAGIA_SLACK_CONFIG_FRONTED" "$TAIGA_CONFIG_FILE_FRONTEND"
   then
       # frontend is configured
-      echo "Slack  active in fronted"
+      echo "Deactivate Slack in fronted"
       PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","contribPlugins","'"$TAIGA_CONFIG_FILE_FRONTEND"'",True)'
       cd /scripts/ && python -c "$PYTHON_CMD"
       cd $WORKINGDIR
-      echo "Slack  deactived in fronted"
+      echo "Slack deactived in fronted"
   else
   # TODO: add code to deactivate in frontend
       echo "Slack already deactived in fronted"
