@@ -1,5 +1,7 @@
 #!/bin/bash
 
+WORKINGDIR=$PWD
+
 
 TAGIA_SLACK_CONFIG_BACKEND='## Slack
 # https://github.com/taigaio/taiga-contrib-slack
@@ -53,7 +55,9 @@ activate_slack () {
       # TODO: originally, we want to ADD the plugin and not just replace all previous configurations
       # frontend is not  configured
       echo "Activate Slack in fronted"
-      sed -i "s#\"contribPlugins\": \[\]#\"contribPlugins\": \[\"/plugins/slack/slack.json\"\]#g"  "$TAIGA_CONFIG_FILE_FRONTEND"
+      PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","contribPlugins","'"$TAIGA_CONFIG_FILE_FRONTEND"'")'
+      cd /scripts/ && python -c "$PYTHON_CMD"
+      cd $WORKINGDIR
       echo "Slack actived in fronted"
   fi
 }
@@ -77,9 +81,19 @@ deactivate_slack () {
       echo "Slack is not active"
   fi
 
+  # activate in the fronted
+  if grep -Fxq "$TAGIA_SLACK_CONFIG_FRONTED" "$TAIGA_CONFIG_FILE_FRONTEND"
+  then
+      # frontend is configured
+      echo "Slack  active in fronted"
+      PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","contribPlugins","'"$TAIGA_CONFIG_FILE_FRONTEND"'",True)'
+      cd /scripts/ && python -c "$PYTHON_CMD"
+      cd $WORKINGDIR
+      echo "Slack  deactived in fronted"
+  else
   # TODO: add code to deactivate in frontend
-
-
+      echo "Slack already deactived in fronted"
+  fi
 }
 
 

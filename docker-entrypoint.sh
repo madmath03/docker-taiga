@@ -1,5 +1,7 @@
 #!/bin/bash
 
+WORKINGDIR=$PWD
+
 # Setup database automatically if needed
 if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
   echo "Running database check"
@@ -32,25 +34,30 @@ python manage.py collectstatic --noinput
 # configure the slack contrib plugin
 source /scripts/config-slack-plugin.sh
 
-# Automatically replace "TAIGA_HOSTNAME" with the environment variable
-sed -ri "s#(\"api\": \"http://).*(/api/v1/\",)#\1$TAIGA_HOSTNAME\2#g" /taiga/conf.json
-
-# Look to see if we should set the "eventsUrl"
-if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
-  echo "Enabling Taiga Events"
-  sed -i "s#eventsUrl\": null#eventsUrl\": \"ws://$TAIGA_HOSTNAME/events\"#g" /taiga/conf.json
-fi
+HOSTNAME_TAIGA_URL="http://$TAIGA_HOSTNAME/api/v1/"
+HOSTNAME_TAIGA_URL_EVENTS="ws://$TAIGA_HOSTNAME/events"
 
 # Handle enabling/disabling SSL
 if [ "$TAIGA_SSL_BY_REVERSE_PROXY" = "True" ] || [ "$TAIGA_SSL" = "True" ]; then
   echo "Enabling SSL support!"
-  sed -i "s#http://#https://#g" /taiga/conf.json
-  sed -i "s#ws://#wss://#g" /taiga/conf.json
-elif grep -q "wss://" "/taiga/conf.json"; then
-  echo "Disabling SSL support!"
-  sed -i "s#https://#http://#g" /taiga/conf.json
-  sed -i "s#wss://#ws://#g" /taiga/conf.json
+  HOSTNAME_TAIGA_URL="https://$TAIGA_HOSTNAME/api/v1/"
+  HOSTNAME_TAIGA_URL_EVENTS="wss://$TAIGA_HOSTNAME/events"
 fi
+
+# Automatically replace "TAIGA_HOSTNAME" with the environment variable
+PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","api","'"$HOSTNAME_TAIGA_URL"'")'
+echo "Invoke $PYTHON_CMD"
+cd /scripts/ && python -c "$PYTHON_CMD"
+cd $WORKINGDIR
+
+# Look to see if we should set the "eventsUrl"
+if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+  echo "Enabling Taiga Events"
+  PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","eventsUrl","'"$HOSTNAME_TAIGA_URL_EVENTS"'")'
+  cd /scripts/ && python -c "$PYTHON_CMD"
+  cd $WORKINGDIR
+fi
+
 
 # Reinitialize nginx links
 if [ "$TAIGA_SSL" = "True" ]; then
