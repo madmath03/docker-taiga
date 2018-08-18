@@ -54,7 +54,7 @@ activate_slack () {
   else
       # frontend is not  configured
       echo "Activate Slack in fronted"
-      PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","contribPlugins","'"$TAIGA_CONFIG_FILE_FRONTEND"'")'
+      PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","contribPlugins","'"$TAGIA_SLACK_CONFIG_FRONTED"'")'
       cd /scripts/ && python -c "$PYTHON_CMD"
       cd $WORKINGDIR
       echo "Slack actived in fronted"
@@ -90,7 +90,6 @@ deactivate_slack () {
       cd $WORKINGDIR
       echo "Slack deactived in fronted"
   else
-  # TODO: add code to deactivate in frontend
       echo "Slack already deactived in fronted"
   fi
 }
@@ -101,7 +100,7 @@ deactivate_slack () {
 if [ ! -z "$TAIGA_SLACK" ]; then
   echo "Configure slack-contrib plugin"
   
-  if [ "$TAIGA_SLACK" = "ACTIVE" ]; then
+  if [ "$TAIGA_SLACK" = "True" ]; then
     result=$(download_taiga)
     activate_slack
     echo "Received ${result}"
@@ -109,7 +108,7 @@ if [ ! -z "$TAIGA_SLACK" ]; then
     python manage.py migrate taiga_contrib_slack
   fi
 
-  if [ "$TAIGA_SLACK" = "DEACTIVE" ]; then
+  if [ "$TAIGA_SLACK" = "False" ]; then
     deactivate_slack
   fi
 
