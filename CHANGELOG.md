@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
-- Improve database check script with a loop and timeout from @benyanke.
+- Update to taiga 3.4 (back and front).
+- Keep SSL management from proxy with TAIGA_SSL_BY_REVERSE_PROXY
+- Improve database check script with a loop and timeout from @benyanke and @anddann.
 
 ## [3.3.16] - 2017-08-11
 ### Added
