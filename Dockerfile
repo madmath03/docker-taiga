@@ -17,7 +17,8 @@ RUN apk add --update --no-cache \
     musl-dev \
     libxml2-dev \
     libxslt-dev \
-    jpeg-dev
+    jpeg-dev \
+    curl
 
 # Preparing Nginx data
 COPY taiga-back /usr/src/taiga-back

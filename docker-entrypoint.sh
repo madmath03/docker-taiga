@@ -49,7 +49,7 @@ fi
 
 # Reinitialize nginx links
 rm /etc/nginx/sites-enabled/*
-if [ "$TAIGA_SSL_BY_REVERSE_PROXY" = "True" ] || [ "$TAIGA_SSL" = "True" ]; then
+if [ "$TAIGA_SSL" = "True" ]; then
   if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
     ln -s /etc/nginx/sites-available/taiga-ssl /etc/nginx/sites-enabled/taiga-events-ssl
   else

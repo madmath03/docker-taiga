@@ -34,7 +34,7 @@ while True:
         exists = False
     if exists is False:
         tryCount += 1
-        if tryCount < DB_TIMEOUT:
+        if tryCount < int(DB_TIMEOUT):
             # uncomment this line for debugging
             # print("Database is not yet ready. Connection attempt " + str(tryCount) + " of " + str(DB_TIMEOUT) + ". Sleeping for " + str(sleepSeconds) + " seconds and trying again.\n")
             time.sleep(sleepSeconds)
@@ -42,5 +42,13 @@ while True:
             print("Database wait timeout reached. Exiting.")
             sys.exit(1)
     else:
-        print("Database is ready.")
-        sys.exit(0)
+        # check if there is content in the database
+        cur = conn.cursor()
+        cur.execute("select * from information_schema.tables where table_name=%s", ('django_migrations',))
+        exists = bool(cur.rowcount)
+        if exists is False:
+            print("Database does not appear to be setup.")
+            sys.exit(2)
+        else:
+            print("Database is ready.")
+            sys.exit(0)
