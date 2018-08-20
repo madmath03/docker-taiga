@@ -1,7 +1,7 @@
 *
 !conf
+!scripts
 !taiga-back
 !taiga-front-dist
-!checkdb.py
 !docker-entrypoint.sh
 !docker-settings.py
