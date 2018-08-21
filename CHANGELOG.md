@@ -5,10 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Slack integration from @anddann.
+
 ### Changed
 - Update to taiga 3.4 (back and front).
-- Keep SSL management from proxy with TAIGA_SSL_BY_REVERSE_PROXY
+- Keep SSL management from proxy with TAIGA_SSL_BY_REVERSE_PROXY.
 - Improve database check script with a loop and timeout from @benyanke and @anddann.
+- Upgrade base image to python 3.6
+- All environment vars moved in conf.env
 
 ## [3.3.16] - 2017-08-11
 ### Added
