@@ -3,7 +3,7 @@
 WORKINGDIR=$PWD
 
 # Setup database automatically if needed
-if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
+if [ "$TAIGA_SKIP_DB_CHECK" != "True" ]; then
   echo "Running database check"
   python /scripts/checkdb.py
   DB_CHECK_STATUS=$?
@@ -23,6 +23,8 @@ if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
     python manage.py loaddata initial_project_templates
     python manage.py loaddata initial_role
   fi
+else
+  echo "Bypassing database check on user request"
 fi
 
 # In case of frontend upgrade, locales and statics should be regenerated
