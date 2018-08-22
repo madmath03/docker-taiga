@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.4.0] - 2018-08-23
 ### Added
 - Slack integration from @anddann.
 
@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Upgrade base image to python 3.6
 - All environment vars moved in conf.env
 
-## [3.3.16] - 2017-08-11
+## [3.3.16] - 2018-08-11
 ### Added
 - Update to taiga 3.3.16 (back).
 - This CHANGELOG file and CONTRIBUTING.
@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Allow to change hostname after container initialization.
 - Allow to use ssl with events.
 
-## [3.3.13] - 2017-07-23
+## [3.3.13] - 2018-07-23
 ### Added
 - New alpine branch to provide a lighter image.
 - Exclude useless files from iage with dockerignore from @jsykes.
@@ -44,7 +44,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Fix external reverse proxy with https @anddann.
 
-## [3.3.8] - 2017-06-14
+## [3.3.8] - 2018-06-14
 ### Changed
 - Update to taiga 3.3.8 (back and front).
 - Use default nginx package instead of external one.
@@ -67,7 +67,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Update to taiga 3.3.1 (back and front).
 
-[Unreleased]: https://github.com/ajira86/docker-taiga/compare/3.3.16...HEAD
+[Unreleased]: https://github.com/ajira86/docker-taiga/compare/3.4.0...HEAD
+[3.4.0]: https://github.com/ajira86/docker-taiga/compare/3.3.16...3.4.0
 [3.3.16]: https://github.com/ajira86/docker-taiga/compare/3.3.13...3.3.16
 [3.3.13]: https://github.com/ajira86/docker-taiga/compare/3.3.8...3.3.13
 [3.3.8]: https://github.com/ajira86/docker-taiga/compare/3.3.6...3.3.8
