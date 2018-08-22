@@ -4,18 +4,21 @@ import os, sys, psycopg2, time
 # or until the timeout (1min). Most of the time, the DB is available in 3-5 seconds,
 # so 1 minute is more than enough.
 
-DB_NAME = os.getenv('TAIGA_DB_NAME')
-DB_HOST = os.getenv('TAIGA_DB_HOST')
+DB_NAME = os.getenv('TAIGA_DB_NAME', 'taigadb')
+DB_HOST = os.getenv('TAIGA_DB_HOST', 'posgres')
 DB_USER = os.getenv('TAIGA_DB_USER')
 DB_PASS = os.getenv('TAIGA_DB_PASSWORD')
 DB_TIMEOUT = os.getenv('TAIGA_DB_TIMEOUT', 240)
+
+if not DB_USER or not DB_PASS:
+    print("Database user or password are missing. Exiting.")
+    sys.exit(1)
 
 conn_string = (
     "dbname='" + DB_NAME +
     "' user='" + DB_USER +
     "' host='" + DB_HOST +
     "' password='" + DB_PASS + "'")
-
 
 # Background polling settings
 sleepSeconds = 0.25

@@ -74,7 +74,8 @@ HEALTHCHECK CMD curl --fail http://localhost/conf.json || exit 1
 HEALTHCHECK CMD curl --fail http://localhost/api/v1/ || exit 1
 HEALTHCHECK CMD curl --fail http://localhost || exit 1
 
-COPY checkdb.py /checkdb.py
+
+COPY scripts /scripts
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["gunicorn", "-w 3", "-t 60", "--pythonpath=.", "-b 127.0.0.1:8000", "taiga.wsgi"]

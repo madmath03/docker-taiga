@@ -8,6 +8,8 @@ services:
       # - 443:443 # To enable SSL, uncomment this line
     depends_on:
       - postgres
+    env_file: 
+      - config.env
     volumes:
       # I recommend specifying a volume that maps to taiga's media,
       # this way uploaded files are not lost during upgrades of the taiga image
@@ -19,37 +21,12 @@ services:
 
       # - ./ssl.crt:/etc/nginx/ssl/ssl.crt:ro # To enable SSL, uncomment this line
       # - ./ssl.key:/etc/nginx/ssl/ssl.key:ro # To enable SSL, uncomment this line
-    environment:
-      # Your hostname (REQUIRED)
-      TAIGA_HOSTNAME: localhost
-
-      # Database settings
-      # To use an external database, simply update these and remove the postgres
-      # service from this docker-compose.yml file
-      TAIGA_DB_NAME: taigadb
-      TAIGA_DB_HOST: postgres
-      TAIGA_DB_USER: postgres
-      TAIGA_DB_PASSWORD: password
-      # TAIGA_DB_TIMEOUT: 240 # Uncomment this if you want to increase timeout
-
-      # TAIGA_SSL: 'True' # To enable SSL, uncomment this line
-      # TAIGA_SSL_BY_REVERSE_PROXY: 'True' # To enable SSL, handling by a reverse proxy, uncomment this
-
-      # To use an external SMTP for emails, fill in these values:
-      # TAIGA_ENABLE_EMAIL: True
-      # TAIGA_EMAIL_FROM: no-reply@taiga.mycompany.net
-      # TAIGA_EMAIL_USE_TLS: True
-      # TAIGA_EMAIL_HOST: smtp.google.com
-      # TAIGA_EMAIL_PORT: 587
-      # TAIGA_EMAIL_USER: me@gmail.com
-      # TAIGA_EMAIL_PASS: super-secure-pass phrase thing!
+      
 
   postgres:
     image: postgres:10.4-alpine
-    environment:
-      POSTGRES_DB: taigadb
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: postgres
+    env_file: 
+      - config.env
     ports:
       - 5432
     volumes:
