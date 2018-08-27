@@ -1,9 +1,11 @@
 #!/bin/bash
 
+WORKINGDIR=$PWD
+
 # Setup database automatically if needed
-if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
+if [ "$TAIGA_SKIP_DB_CHECK" != "True" ]; then
   echo "Running database check"
-  python /checkdb.py
+  python /scripts/checkdb.py
   DB_CHECK_STATUS=$?
 
   if [ $DB_CHECK_STATUS -eq 1 ]; then
@@ -21,35 +23,46 @@ if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
     python manage.py loaddata initial_project_templates
     python manage.py loaddata initial_role
   fi
+else
+  echo "Bypassing database check on user request"
 fi
 
 # In case of frontend upgrade, locales and statics should be regenerated
-python manage.py compilemessages
-python manage.py collectstatic --noinput
+python manage.py compilemessages > /dev/null
+python manage.py collectstatic --noinput > /dev/null
 
-# Automatically replace "TAIGA_HOSTNAME" with the environment variable
-sed -ri "s#(\"api\": \"http://).*(/api/v1/\",)#\1$TAIGA_HOSTNAME\2#g" /taiga/conf.json
 
-# Look to see if we should set the "eventsUrl"
-if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
-  echo "Enabling Taiga Events"
-  sed -i "s#eventsUrl\": null#eventsUrl\": \"ws://$TAIGA_HOSTNAME/events\"#g" /taiga/conf.json
-fi
+# configure the slack contrib plugin
+source /scripts/config-slack-plugin.sh
+
+HOSTNAME_TAIGA_URL="http://$TAIGA_HOSTNAME/api/v1/"
+HOSTNAME_TAIGA_URL_EVENTS="ws://$TAIGA_HOSTNAME/events"
 
 # Handle enabling/disabling SSL
 if [ "$TAIGA_SSL_BY_REVERSE_PROXY" = "True" ] || [ "$TAIGA_SSL" = "True" ]; then
   echo "Enabling SSL support!"
-  sed -i "s#http://#https://#g" /taiga/conf.json
-  sed -i "s#ws://#wss://#g" /taiga/conf.json
-elif grep -q "wss://" "/taiga/conf.json"; then
-  echo "Disabling SSL support!"
-  sed -i "s#https://#http://#g" /taiga/conf.json
-  sed -i "s#wss://#ws://#g" /taiga/conf.json
+  HOSTNAME_TAIGA_URL="https://$TAIGA_HOSTNAME/api/v1/"
+  HOSTNAME_TAIGA_URL_EVENTS="wss://$TAIGA_HOSTNAME/events"
 fi
+
+# Automatically replace "TAIGA_HOSTNAME" with the environment variable
+PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","api","'"$HOSTNAME_TAIGA_URL"'")'
+echo "Invoke $PYTHON_CMD"
+cd /scripts/ && python -c "$PYTHON_CMD"
+cd $WORKINGDIR
+
+# Look to see if we should set the "eventsUrl"
+if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+  echo "Enabling Taiga Events"
+  PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","eventsUrl","'"$HOSTNAME_TAIGA_URL_EVENTS"'")'
+  cd /scripts/ && python -c "$PYTHON_CMD"
+  cd $WORKINGDIR
+fi
+
 
 # Reinitialize nginx links
 rm /etc/nginx/sites-enabled/*
-if [ "$TAIGA_SSL_BY_REVERSE_PROXY" = "True" ] || [ "$TAIGA_SSL" = "True" ]; then
+if [ "$TAIGA_SSL" = "True" ]; then
   if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
     ln -s /etc/nginx/sites-available/taiga-ssl /etc/nginx/sites-enabled/taiga-events-ssl
   else

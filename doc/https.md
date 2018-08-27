@@ -1,6 +1,20 @@
 Enabling HTTPS
 ==============
 
+Prerequisites
+-------------
+
+You will need certificates files. If you need to auto-generate a pair, here is a little example
+
+```
+openssl req -new -key ssl.key.bak -out ssl.csr
+openssl rsa -in ssl.key.bak -out ssl.key
+openssl x509 -req -days 365 -in ssl.csr -signkey ssl.key -out ssl.crt
+```
+
+Setup
+-----
+
 If you want to enable support for HTTPS, you'll need to specify all of these
 additional arguments to your `docker run` command.
 
