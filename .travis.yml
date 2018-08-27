@@ -25,3 +25,5 @@ before_deploy:
 deploy:
   provider: script
   script: docker push "${IMAGE_NAME}:travis"
+  on:
+    branch: travis
