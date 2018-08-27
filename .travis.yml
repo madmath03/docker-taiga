@@ -8,15 +8,19 @@ env:
   global:
     - IMAGE_NAME=novanet/taiga
 
-before_script:
+install:
   - docker pull "$IMAGE_NAME"
   - docker pull postgres:10
-
-script:
   - docker build --tag "$IMAGE_NAME" .
   - docker images
+
+script:
   - docker run --name taiga-postgres -e POSTGRES_PASSWORD=password -d postgres
-  - docker run -e TAIGA_HOSTNAME=localhost --link taiga-postgres:postgres -e TAIGA_DB_HOST=postgres -e TAIGA_DB_NAME=postgres -e TAIGA_DB_USER=postgres -e TAIGA_DB_PASSWORD=password -t $IMAGE_NAME /bin/bash /scripts/tests.sh
+  - docker run -itd --name taiga -e TAIGA_HOSTNAME=localhost --link taiga-postgres:postgres -e TAIGA_DB_HOST=postgres -e TAIGA_DB_NAME=postgres -e TAIGA_DB_USER=postgres -e TAIGA_DB_PASSWORD=password -p 80:80 $IMAGE_NAME
+  - sleep 20
+  - docker ps -a
+  - curl --head http://localhost
+  - /bin/bash scripts/tests.sh
 
 before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
