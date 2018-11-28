@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+## [4.0.1] - 2018-11-28
+### Changed
+- Update to taiga back 4.0.1 and front 4.0.0.
+
 ## [3.4.0] - 2018-08-23
 ### Added
 - Slack integration from @anddann.
@@ -67,7 +73,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Update to taiga 3.3.1 (back and front).
 
-[Unreleased]: https://github.com/ajira86/docker-taiga/compare/3.4.0...HEAD
+[Unreleased]: https://github.com/ajira86/docker-taiga/compare/4.0.1...HEAD
+[4.0.1]: https://github.com/ajira86/docker-taiga/compare/3.4.0...4.0.1
 [3.4.0]: https://github.com/ajira86/docker-taiga/compare/3.3.16...3.4.0
 [3.3.16]: https://github.com/ajira86/docker-taiga/compare/3.3.13...3.3.16
 [3.3.13]: https://github.com/ajira86/docker-taiga/compare/3.3.8...3.3.13
