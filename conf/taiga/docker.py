@@ -14,6 +14,9 @@ DATABASES = {
 
 TAIGA_HOSTNAME = os.getenv('TAIGA_HOSTNAME')
 
+if os.getenv('TAIGA_REGISTER_ENABLED').lower() == 'true':
+    PUBLIC_REGISTER_ENABLED = True
+
 SITES['api']['domain'] = TAIGA_HOSTNAME
 SITES['front']['domain'] = TAIGA_HOSTNAME
 
