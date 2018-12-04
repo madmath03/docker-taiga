@@ -59,6 +59,13 @@ if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
   cd $WORKINGDIR
 fi
 
+# Look to see if we should enable registration
+if [ ! -z "$TAIGA_REGISTER_ENABLED" ]; then
+  echo "Configuring registration"
+  PYTHON_CMD='import modify_conf; modify_conf.modifyJSONFile("/taiga/conf.json","publicRegisterEnabled",'$TAIGA_REGISTER_ENABLED')'
+  cd /scripts/ && python -c "$PYTHON_CMD"
+  cd $WORKINGDIR
+fi
 
 # Reinitialize nginx links
 rm /etc/nginx/sites-enabled/*

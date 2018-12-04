@@ -60,6 +60,7 @@ Use the following environmental variables to generate a `local.py` for [taiga-ba
   - `-e TAIGA_SECRET_KEY` (set this to a random string to configure the `SECRET_KEY` value for taiga-back; defaults to an insecure random string)
   - `-e TAIGA_SKIP_DB_CHECK` (set to skip the database check that attempts to automatically setup initial database)
   - `-e TAIGA_ENABLE_EMAIL=True` (see [Configuring SMTP](doc/mail.md))
+  - `-e TAIGA_REGISTER_ENABLED=True` (enable public registration)
   - `-e TAIGA_SLACK=True` (to configure the plugin, visit the [Taiga documentation](https://tree.taiga.io/support/contrib-plugins/slack-integration))
 
 *Note*: Database variables are also required, see [Using Database server](doc/db.md). These are required even when using a container for your database.
