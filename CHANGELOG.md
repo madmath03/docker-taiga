@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.2] - 2018-12-04
+### Added
+- Ability to enable/disable registration with env var.
+
+### Changed
+- Update to taiga back 4.0.2.
+
 ## [4.0.1] - 2018-11-28
 ### Changed
 - Update to taiga back 4.0.1 and front 4.0.0.
@@ -77,7 +84,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Update to taiga 3.3.1 (back and front).
 
-[Unreleased]: https://github.com/ajira86/docker-taiga/compare/4.0.1...HEAD
+[Unreleased]: https://github.com/ajira86/docker-taiga/compare/4.0.2...HEAD
+[4.0.1]: https://github.com/ajira86/docker-taiga/compare/4.0.1...4.0.2
 [4.0.1]: https://github.com/ajira86/docker-taiga/compare/3.4.0...4.0.1
 [3.4.0]: https://github.com/ajira86/docker-taiga/compare/3.3.16...3.4.0
 [3.3.16]: https://github.com/ajira86/docker-taiga/compare/3.3.13...3.3.16
