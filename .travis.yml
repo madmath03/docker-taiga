@@ -1,0 +1,32 @@
+dist: trusty
+sudo: required
+
+services: docker
+
+language: bash
+
+branches:
+  only:
+    - master
+    - alpine
+
+before_script:
+  - env | sort
+  - name="taiga-back"
+  - image="madmath03/docker-taiga:travis-${VERSION}-${VARIANT}"
+  - dir="."
+
+script:
+  - travis_retry docker build -t "$image" "$dir"
+
+after_script:
+  - docker images
+  - docker run --name "$name" -d "$image"
+  - docker ps
+  - docker logs "$name"
+
+notifications:
+  email: false
+
+env: # Environments
+    - VERSION=4.0 VARIANT=alpine
